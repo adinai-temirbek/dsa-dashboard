@@ -638,6 +638,7 @@ nav {
   line-height: 1.8;
   color: #a8c8e0;
   overflow-x: auto;
+  white-space: pre; /* preserve line breaks and indentation */
 }
 
 .pseudocode .kw  { color: var(--cyan); font-weight: 600; }
