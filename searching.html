@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Searching Algorithms · DSA Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DSA Lab</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="searching.html">Searching</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="linkedlist.html">Linked List</a></li>
+    <li><a href="hashing.html">Hashing</a></li>
+    <li><a href="queue.html">Queue</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h1>🔍 <span>Searching</span> Algorithms</h1>
+    <p>Searching algorithms locate a specific element within a data structure. The two fundamental approaches are Linear Search (sequential) and Binary Search (divide and conquer).</p>
+  </div>
+
+  <!-- ── Overview ── -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📖</span> Overview</h2>
+    <p style="color:var(--text2);font-size:0.95rem;line-height:1.8;">
+      Searching is one of the most common operations in computing. Choosing the right search algorithm depends on whether the data is sorted, the expected size of the dataset, and performance requirements. Linear search works on unsorted data but checks every element. Binary search is dramatically faster but requires sorted data.
+    </p>
+    <div class="concept-box mt2">
+      <div class="concept-title">💡 Key Insight</div>
+      Binary Search cuts the search space in half with each comparison. For 1,000,000 elements, it takes at most ~20 comparisons vs up to 1,000,000 for Linear Search.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LINEAR SEARCH DEMO
+  ══════════════════════════════════ -->
+  <div class="demo-section reveal">
+    <div class="demo-header">🔴 Linear Search — Interactive Visualization</div>
+    <div class="demo-body">
+      <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1.25rem;">Linear search scans each element from left to right until the target is found or the array ends. Time Complexity: <strong class="text-cyan">O(n)</strong></p>
+      <div class="demo-controls">
+        <input type="text" id="ls-array" class="demo-input" value="5, 12, 3, 8, 21, 7, 15, 4" placeholder="Array (comma separated)" style="width:260px;" />
+        <input type="number" id="ls-target" class="demo-input" value="7" placeholder="Target" style="width:90px;" />
+        <button id="ls-start" class="btn btn-primary btn-sm">▶ Start</button>
+        <button id="ls-next"  class="btn btn-secondary btn-sm" disabled>Next Step →</button>
+        <button id="ls-reset" class="btn btn-secondary btn-sm">↺ Reset</button>
+      </div>
+
+      <div class="step-counter" id="ls-step-count">Step 0 / 0</div>
+      <div class="progress-bar"><div class="progress-fill" id="ls-progress" style="width:0%"></div></div>
+
+      <div class="viz-area" id="ls-viz" style="min-height:100px;">
+        <span style="color:var(--text3);font-size:0.85rem;">Press Start to begin visualization</span>
+      </div>
+
+      <div class="step-panel" id="ls-msg">Press <strong>Start</strong> to begin. Enter an array and a target value above.</div>
+
+      <!-- Legend -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.75rem;font-size:0.78rem;color:var(--text3);">
+        <span><span class="viz-element active" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;transform:none;box-shadow:none;border-radius:4px;"></span>Checking</span>
+        <span><span class="viz-element found" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;transform:none;box-shadow:none;border-radius:4px;animation:none;"></span>Found</span>
+        <span><span class="viz-element" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;border-radius:4px;"></span>Unchecked</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pseudocode -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Pseudocode — Linear Search</h2>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">linearSearch</span>(arr, target):
+  <span class="kw">for</span> i = 0 <span class="kw">to</span> arr.length - 1:
+    <span class="kw">if</span> arr[i] == target:
+      <span class="kw">return</span> i     <span class="cm">// target found at index i</span>
+  <span class="kw">return</span> -1   <span class="cm">// target not found</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       BINARY SEARCH DEMO
+  ══════════════════════════════════ -->
+  <div class="demo-section reveal">
+    <div class="demo-header">🟢 Binary Search — Interactive Visualization</div>
+    <div class="demo-body">
+      <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1.25rem;">Binary search divides the sorted array in half repeatedly. The array will be sorted automatically. Time Complexity: <strong class="text-cyan">O(log n)</strong></p>
+      <div class="demo-controls">
+        <input type="text" id="bs-array" class="demo-input" value="3, 5, 7, 12, 15, 21, 35, 40" placeholder="Array (sorted)" style="width:260px;" />
+        <input type="number" id="bs-target" class="demo-input" value="15" placeholder="Target" style="width:90px;" />
+        <button id="bs-start" class="btn btn-primary btn-sm">▶ Start</button>
+        <button id="bs-next"  class="btn btn-secondary btn-sm" disabled>Next Step →</button>
+        <button id="bs-reset" class="btn btn-secondary btn-sm">↺ Reset</button>
+      </div>
+
+      <div class="step-counter" id="bs-step-count">Step 0 / 0</div>
+      <div class="progress-bar"><div class="progress-fill" id="bs-progress" style="width:0%"></div></div>
+
+      <div class="viz-area" id="bs-viz" style="min-height:100px;">
+        <span style="color:var(--text3);font-size:0.85rem;">Press Start to begin visualization</span>
+      </div>
+
+      <div class="step-panel" id="bs-msg">Press <strong>Start</strong> to begin. Array will be sorted automatically.</div>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.75rem;font-size:0.78rem;color:var(--text3);">
+        <span><span class="viz-element active" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;transform:none;box-shadow:none;border-radius:4px;"></span>Middle</span>
+        <span><span class="viz-element comparing" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;transform:none;box-shadow:none;border-radius:4px;"></span>Search range</span>
+        <span><span class="viz-element eliminated" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;border-radius:4px;transform:none;"></span>Eliminated</span>
+        <span><span class="viz-element found" style="width:24px;height:24px;font-size:0.6rem;display:inline-flex;vertical-align:middle;margin-right:4px;transform:none;border-radius:4px;animation:none;"></span>Found</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pseudocode Binary -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Pseudocode — Binary Search</h2>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">binarySearch</span>(arr, target):
+  lo = <span class="nm">0</span>
+  hi = arr.length - <span class="nm">1</span>
+  <span class="kw">while</span> lo <= hi:
+    mid = floor((lo + hi) / <span class="nm">2</span>)
+    <span class="kw">if</span> arr[mid] == target:
+      <span class="kw">return</span> mid         <span class="cm">// found!</span>
+    <span class="kw">else if</span> arr[mid] < target:
+      lo = mid + <span class="nm">1</span>       <span class="cm">// search right half</span>
+    <span class="kw">else</span>:
+      hi = mid - <span class="nm">1</span>       <span class="cm">// search left half</span>
+  <span class="kw">return</span> -<span class="nm">1</span>           <span class="cm">// not found</span>
+    </div>
+  </div>
+
+  <!-- Complexity Table -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📊</span> Complexity Comparison</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th><th>Requires Sorted?</th></tr></thead>
+      <tbody>
+        <tr><td>Linear Search</td><td class="good">O(1)</td><td class="mid">O(n)</td><td class="bad">O(n)</td><td class="good">O(1)</td><td>No</td></tr>
+        <tr><td>Binary Search</td><td class="good">O(1)</td><td class="good">O(log n)</td><td class="good">O(log n)</td><td class="good">O(1)</td><td>Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Advantages / Disadvantages -->
+  <div class="content-section reveal">
+    <h2><span class="icon">⚖️</span> Advantages &amp; Disadvantages</h2>
+    <div class="two-col">
+      <div>
+        <p style="color:var(--cyan);font-weight:600;margin-bottom:0.5rem;">Linear Search</p>
+        <ul class="adv-list pros">
+          <li>Works on unsorted data</li>
+          <li>Simple to implement</li>
+          <li>No preprocessing required</li>
+        </ul>
+        <ul class="adv-list cons mt2">
+          <li>Slow for large datasets O(n)</li>
+          <li>Inefficient compared to alternatives</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--green);font-weight:600;margin-bottom:0.5rem;">Binary Search</p>
+        <ul class="adv-list pros">
+          <li>Very fast: O(log n)</li>
+          <li>Ideal for large sorted datasets</li>
+          <li>Eliminates half the data each step</li>
+        </ul>
+        <ul class="adv-list cons mt2">
+          <li>Requires sorted array</li>
+          <li>Poor for linked lists (no random access)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-world Applications -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🌐</span> Real-World Applications</h2>
+    <ul class="adv-list pros" style="color:var(--text2);">
+      <li><strong>Linear Search:</strong> Scanning unsorted records, contact list search on small datasets</li>
+      <li><strong>Binary Search:</strong> Dictionary lookups, database index searches, Git bisect for bug finding</li>
+      <li><strong>Binary Search:</strong> Finding words in sorted dictionaries, autocomplete systems</li>
+      <li><strong>Binary Search:</strong> Square root estimation algorithms, OS memory allocation</li>
+    </ul>
+  </div>
+
+  <!-- Did You Know -->
+  <div class="did-you-know reveal">
+    <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
+    <div class="dyk-content">
+      Binary Search was first published in 1946, but the first bug-free implementation wasn't written until 1962! Even Jon Bentley (who popularized it) noted that most programmers fail to implement it correctly on the first try. The tricky part is computing the midpoint — integer overflow can occur with <code>(lo + hi) / 2</code>; the safe version is <code>lo + (hi - lo) / 2</code>.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">DSA Interactive Dashboard</div>
+    <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
+    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

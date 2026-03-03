@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stack · DSA Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DSA Lab</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="searching.html">Searching</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="linkedlist.html">Linked List</a></li>
+    <li><a href="hashing.html">Hashing</a></li>
+    <li><a href="queue.html">Queue</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h1>📚 <span>Stack</span> Data Structure</h1>
+    <p>A stack is a linear data structure following the LIFO (Last In, First Out) principle — like a stack of plates. Push adds to the top; Pop removes from the top.</p>
+  </div>
+
+  <!-- Overview -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📖</span> Overview</h2>
+    <p style="color:var(--text2);font-size:0.95rem;line-height:1.8;">
+      A stack is one of the most fundamental data structures in computer science. It supports three primary operations: <strong class="text-cyan">push</strong> (insert element on top), <strong class="text-cyan">pop</strong> (remove element from top), and <strong class="text-cyan">peek</strong> (view top without removing). All three run in O(1) time.
+    </p>
+    <div class="concept-box mt2">
+      <div class="concept-title">💡 LIFO Principle</div>
+      The last element pushed onto the stack is the first one to be popped off. Think of a stack of books — you can only take from the top, and you add to the top.
+    </div>
+  </div>
+
+  <!-- DEMO -->
+  <div class="demo-section reveal">
+    <div class="demo-header" style="color:var(--teal);">📚 Interactive Stack Demo — Push &amp; Pop</div>
+    <div class="demo-body">
+      <div class="demo-controls">
+        <input type="text" id="stack-input" class="demo-input" placeholder="Value to push" style="width:160px;" />
+        <button id="stack-push"  class="btn btn-primary btn-sm">⬆ Push</button>
+        <button id="stack-pop"   class="btn btn-danger btn-sm">⬇ Pop</button>
+        <button id="stack-peek"  class="btn btn-secondary btn-sm">👁 Peek</button>
+        <button id="stack-clear" class="btn btn-secondary btn-sm">✕ Clear</button>
+        <span id="stack-size" style="color:var(--text3);font-size:0.82rem;font-family:var(--font-mono);">Size: 0</span>
+      </div>
+
+      <!-- Stack Visualization -->
+      <div class="stack-viz" id="stack-viz">
+        <p id="stack-empty-msg" style="color:var(--text3);font-size:0.85rem;position:absolute;">Stack is empty. Push some elements!</p>
+        <div class="stack-base"></div>
+      </div>
+
+      <div class="step-panel" id="stack-msg" style="margin-top:1rem;">Push values onto the stack and watch it grow from the bottom up.</div>
+
+      <!-- LIFO illustration -->
+      <div class="concept-box mt2">
+        <div class="concept-title">🔄 LIFO Demonstration</div>
+        Push: A → B → C → D. Then Pop: D is removed first (last in, first out). Order of pops: D, C, B, A.
+      </div>
+    </div>
+  </div>
+
+  <!-- Expression Evaluation Example -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🧮</span> Expression Evaluation with Stack</h2>
+    <p style="color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Stacks are used to evaluate arithmetic expressions. Here's how the expression <code class="text-mono" style="color:var(--cyan);">3 + 4 * 2</code> is processed:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;font-family:var(--font-mono);font-size:0.85rem;">
+        <div style="color:var(--text3);font-size:0.7rem;margin-bottom:0.5rem;">STEP 1</div>
+        <div style="color:var(--cyan);">Read 3</div>
+        <div style="color:var(--text3);">Push to operand stack</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;font-family:var(--font-mono);font-size:0.85rem;">
+        <div style="color:var(--text3);font-size:0.7rem;margin-bottom:0.5rem;">STEP 2</div>
+        <div style="color:var(--yellow);">Read +</div>
+        <div style="color:var(--text3);">Push to operator stack</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;font-family:var(--font-mono);font-size:0.85rem;">
+        <div style="color:var(--text3);font-size:0.7rem;margin-bottom:0.5rem;">STEP 3</div>
+        <div style="color:var(--cyan);">Read 4</div>
+        <div style="color:var(--text3);">Push to operand stack</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;font-family:var(--font-mono);font-size:0.85rem;">
+        <div style="color:var(--text3);font-size:0.7rem;margin-bottom:0.5rem;">STEP 4</div>
+        <div style="color:var(--yellow);">Read * (higher prec.)</div>
+        <div style="color:var(--text3);">Push to operator stack</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;font-family:var(--font-mono);font-size:0.85rem;">
+        <div style="color:var(--text3);font-size:0.7rem;margin-bottom:0.5rem;">STEP 5</div>
+        <div style="color:var(--cyan);">Read 2, end</div>
+        <div style="color:var(--text3);">Evaluate: 4*2=8, then 3+8=11</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pseudocode -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Pseudocode</h2>
+    <div class="pseudocode">
+<span class="cm">// Stack implementation using array</span>
+<span class="kw">class</span> <span class="fn">Stack</span>:
+  stack = []
+  top = -<span class="nm">1</span>
+
+  <span class="kw">function</span> <span class="fn">push</span>(element):
+    stack[++top] = element    <span class="cm">// Add to top</span>
+
+  <span class="kw">function</span> <span class="fn">pop</span>():
+    <span class="kw">if</span> isEmpty(): <span class="kw">throw</span> "Underflow"
+    <span class="kw">return</span> stack[top--]       <span class="cm">// Remove from top</span>
+
+  <span class="kw">function</span> <span class="fn">peek</span>():
+    <span class="kw">if</span> isEmpty(): <span class="kw">throw</span> "Empty"
+    <span class="kw">return</span> stack[top]         <span class="cm">// View top without removing</span>
+
+  <span class="kw">function</span> <span class="fn">isEmpty</span>():
+    <span class="kw">return</span> top == -<span class="nm">1</span>
+    </div>
+  </div>
+
+  <!-- Complexity -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📊</span> Time &amp; Space Complexity</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Operation</th><th>Time</th><th>Space</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Push</td><td class="good">O(1)</td><td class="good">O(1)</td><td>Amortized O(1) with dynamic array</td></tr>
+        <tr><td>Pop</td><td class="good">O(1)</td><td class="good">O(1)</td><td>Returns and removes top element</td></tr>
+        <tr><td>Peek</td><td class="good">O(1)</td><td class="good">O(1)</td><td>View without removal</td></tr>
+        <tr><td>Search</td><td class="bad">O(n)</td><td class="good">O(1)</td><td>Must scan from top</td></tr>
+        <tr><td>Overall Space</td><td>—</td><td class="mid">O(n)</td><td>For n elements</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Adv / Disadv -->
+  <div class="content-section reveal">
+    <h2><span class="icon">⚖️</span> Advantages &amp; Disadvantages</h2>
+    <div class="two-col">
+      <div>
+        <ul class="adv-list pros">
+          <li>All primary operations are O(1)</li>
+          <li>Simple and easy to implement</li>
+          <li>Memory efficient when using arrays</li>
+          <li>Ideal for tracking state (undo/redo)</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="adv-list cons">
+          <li>No random access — only top is accessible</li>
+          <li>Fixed size limitation with array implementation</li>
+          <li>Stack overflow if not bounded</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-World -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🌐</span> Real-World Applications</h2>
+    <ul class="adv-list pros" style="color:var(--text2);">
+      <li><strong>Function Call Stack:</strong> Your CPU uses a call stack to manage function calls and returns</li>
+      <li><strong>Browser History:</strong> The Back button uses a stack (current page = top)</li>
+      <li><strong>Undo/Redo:</strong> Text editors and Photoshop use stacks for operation history</li>
+      <li><strong>Expression Evaluation:</strong> Compilers use stacks to parse and evaluate expressions</li>
+      <li><strong>Parenthesis Matching:</strong> Checking balanced brackets in code validation</li>
+    </ul>
+  </div>
+
+  <div class="did-you-know reveal">
+    <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
+    <div class="dyk-content">
+      When you call a function in any programming language, the computer automatically pushes a "stack frame" containing the function's local variables, parameters, and return address onto the call stack. When the function returns, that frame is popped. A "Stack Overflow" error occurs when too many nested function calls exhaust the stack's memory — which is where the famous Q&amp;A website got its name!
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">DSA Interactive Dashboard</div>
+    <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
+    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

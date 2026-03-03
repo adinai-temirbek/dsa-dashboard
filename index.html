@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Interactive Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="index.html" class="nav-logo">DSA Lab</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="searching.html">Searching</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="linkedlist.html">Linked List</a></li>
+    <li><a href="hashing.html">Hashing</a></li>
+    <li><a href="queue.html">Queue</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge">🎓 University Project · 2026</div>
+  <h1>Visualizing <span>Data Structures</span><br>&amp; Algorithms</h1>
+  <p>An interactive learning lab where you can see algorithms execute step-by-step, explore data structures visually, and deeply understand computer science fundamentals.</p>
+  <div class="hero-authors">
+    <div class="author-chip">👩‍💻 <span>Adinai Temirbekova</span></div>
+    <div class="author-chip">👩‍💻 <span>Ailin Adylova</span></div>
+    <div class="author-chip">🎓 Instructor: <span>Muhammad Fayaz</span></div>
+  </div>
+</section>
+
+<!-- ── Dashboard ── -->
+<main class="dashboard">
+  <div class="section-label">Interactive Topic Modules</div>
+  <div class="cards-grid">
+
+    <!-- Searching -->
+    <a href="searching.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#00c8ff,#00e5ff);--card-icon-bg:rgba(0,200,255,0.1);--card-color:#00c8ff;--card-tag-bg:rgba(0,200,255,0.08);animation-delay:0.05s">
+      <div class="card-icon">🔍</div>
+      <div class="card-tag">Algorithms</div>
+      <h3>Searching Algorithms</h3>
+      <p>Visualize Linear Search and Binary Search step by step. See how elements are compared and how divide-and-conquer dramatically reduces lookup time.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Linear Search</span>
+        <span class="meta-pill">Binary Search</span>
+        <span class="meta-pill">O(n) vs O(log n)</span>
+      </div>
+      <span class="btn btn-primary btn-sm">Open Interactive Demo →</span>
+    </a>
+
+    <!-- Sorting -->
+    <a href="sorting.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#7b5cff,#00c8ff);--card-icon-bg:rgba(123,92,255,0.1);--card-color:#7b5cff;--card-tag-bg:rgba(123,92,255,0.08);animation-delay:0.1s">
+      <div class="card-icon" style="background:rgba(123,92,255,0.1);">⚙️</div>
+      <div class="card-tag" style="color:#7b5cff;background:rgba(123,92,255,0.08);">Algorithms</div>
+      <h3>Sorting Algorithms</h3>
+      <p>Watch Bubble Sort, Selection Sort, Insertion Sort, and Merge Sort rearrange elements in real time. Animated bars show every comparison and swap.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Bubble</span>
+        <span class="meta-pill">Selection</span>
+        <span class="meta-pill">Insertion</span>
+        <span class="meta-pill">Merge</span>
+      </div>
+      <span class="btn btn-sm" style="background:linear-gradient(135deg,#7b5cff,#5038cc);color:#fff;">Open Interactive Demo →</span>
+    </a>
+
+    <!-- Stack -->
+    <a href="stack.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#00ffcc,#00c8ff);--card-icon-bg:rgba(0,255,204,0.1);--card-color:#00ffcc;--card-tag-bg:rgba(0,255,204,0.08);animation-delay:0.15s">
+      <div class="card-icon" style="background:rgba(0,255,204,0.1);">📚</div>
+      <div class="card-tag" style="color:#00ffcc;background:rgba(0,255,204,0.08);">Data Structure</div>
+      <h3>Stack</h3>
+      <p>Push and Pop elements interactively. See the LIFO (Last In, First Out) principle come to life with a visual stack that grows and shrinks dynamically.</p>
+      <div class="card-meta">
+        <span class="meta-pill">LIFO</span>
+        <span class="meta-pill">Push / Pop</span>
+        <span class="meta-pill">O(1) operations</span>
+      </div>
+      <span class="btn btn-sm" style="background:linear-gradient(135deg,#00ffcc,#00a888);color:#000;">Open Interactive Demo →</span>
+    </a>
+
+    <!-- Linked List -->
+    <a href="linkedlist.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#ff4f9b,#ff8c42);--card-icon-bg:rgba(255,79,155,0.1);--card-color:#ff4f9b;--card-tag-bg:rgba(255,79,155,0.08);animation-delay:0.2s">
+      <div class="card-icon" style="background:rgba(255,79,155,0.1);">🔗</div>
+      <div class="card-tag" style="color:#ff4f9b;background:rgba(255,79,155,0.08);">Data Structure</div>
+      <h3>Linked List</h3>
+      <p>Insert and delete nodes in a singly linked list. See how nodes are connected through pointers and understand dynamic memory allocation.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Singly Linked</span>
+        <span class="meta-pill">Insert / Delete</span>
+        <span class="meta-pill">Pointers</span>
+      </div>
+      <span class="btn btn-sm" style="background:linear-gradient(135deg,#ff4f9b,#cc2060);color:#fff;">Open Interactive Demo →</span>
+    </a>
+
+    <!-- Hashing -->
+    <a href="hashing.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#ff8c42,#ffd166);--card-icon-bg:rgba(255,140,66,0.1);--card-color:#ff8c42;--card-tag-bg:rgba(255,140,66,0.08);animation-delay:0.25s">
+      <div class="card-icon" style="background:rgba(255,140,66,0.1);">#</div>
+      <div class="card-tag" style="color:#ff8c42;background:rgba(255,140,66,0.08);">Data Structure</div>
+      <h3>Hash Functions</h3>
+      <p>Visualize hash function key mapping and collision handling via separate chaining. Understand how hash tables achieve O(1) average lookup time.</p>
+      <div class="card-meta">
+        <span class="meta-pill">Hash Table</span>
+        <span class="meta-pill">Collisions</span>
+        <span class="meta-pill">Chaining</span>
+      </div>
+      <span class="btn btn-sm" style="background:linear-gradient(135deg,#ff8c42,#cc5a00);color:#fff;">Open Interactive Demo →</span>
+    </a>
+
+    <!-- Queue -->
+    <a href="queue.html" class="topic-card reveal" style="--card-accent:linear-gradient(90deg,#ffd166,#00e5a0);--card-icon-bg:rgba(255,209,102,0.1);--card-color:#ffd166;--card-tag-bg:rgba(255,209,102,0.08);animation-delay:0.3s">
+      <div class="card-icon" style="background:rgba(255,209,102,0.1);">🎯</div>
+      <div class="card-tag" style="color:#ffd166;background:rgba(255,209,102,0.08);">Data Structure</div>
+      <h3>Queue</h3>
+      <p>Enqueue and Dequeue elements with FIFO (First In, First Out) behavior. Visualize how queues model real-world systems like process scheduling.</p>
+      <div class="card-meta">
+        <span class="meta-pill">FIFO</span>
+        <span class="meta-pill">Enqueue / Dequeue</span>
+        <span class="meta-pill">Circular Queue</span>
+      </div>
+      <span class="btn btn-sm" style="background:linear-gradient(135deg,#ffd166,#cc9900);color:#000;">Open Interactive Demo →</span>
+    </a>
+
+  </div>
+
+  <!-- Stats Strip -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-top:3rem;" class="reveal">
+    <div class="content-section" style="text-align:center;padding:1.5rem;">
+      <div style="font-size:2rem;font-family:var(--font-display);font-weight:800;color:var(--cyan);">6</div>
+      <div style="color:var(--text2);font-size:0.85rem;">Topic Modules</div>
+    </div>
+    <div class="content-section" style="text-align:center;padding:1.5rem;">
+      <div style="font-size:2rem;font-family:var(--font-display);font-weight:800;color:var(--teal);">10+</div>
+      <div style="color:var(--text2);font-size:0.85rem;">Algorithms Visualized</div>
+    </div>
+    <div class="content-section" style="text-align:center;padding:1.5rem;">
+      <div style="font-size:2rem;font-family:var(--font-display);font-weight:800;color:var(--purple);">100%</div>
+      <div style="color:var(--text2);font-size:0.85rem;">Interactive</div>
+    </div>
+    <div class="content-section" style="text-align:center;padding:1.5rem;">
+      <div style="font-size:2rem;font-family:var(--font-display);font-weight:800;color:var(--yellow);">0</div>
+      <div style="color:var(--text2);font-size:0.85rem;">External Libraries</div>
+    </div>
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">DSA Interactive Dashboard</div>
+    <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
+    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

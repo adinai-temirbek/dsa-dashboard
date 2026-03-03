@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hashing · DSA Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DSA Lab</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="searching.html">Searching</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="linkedlist.html">Linked List</a></li>
+    <li><a href="hashing.html">Hashing</a></li>
+    <li><a href="queue.html">Queue</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h1>#️⃣ <span>Hash Functions</span> &amp; Hash Tables</h1>
+    <p>Hash tables provide O(1) average-case lookup, insertion, and deletion by mapping keys through a hash function to array indices.</p>
+  </div>
+
+  <!-- Overview -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📖</span> Overview</h2>
+    <p style="color:var(--text2);font-size:0.95rem;line-height:1.8;">
+      A hash table is a data structure that uses a <strong class="text-orange">hash function</strong> to compute an index into an array of buckets. The hash function transforms a key into a number used as the array index. When two keys map to the same index — a <strong class="text-orange">collision</strong> — it must be resolved through techniques like <strong>separate chaining</strong> or <strong>open addressing</strong>.
+    </p>
+    <div class="concept-box mt2" style="background:rgba(255,140,66,0.06);border-color:rgba(255,140,66,0.2);">
+      <div class="concept-title" style="color:var(--orange);">💡 Hash Function Formula</div>
+      For this demo: <code style="color:var(--orange);font-family:var(--font-mono);">hash(key) = key % tableSize</code><br>
+      Example: key=23, size=7 → 23 % 7 = <strong style="color:var(--orange);">2</strong> → stored at index 2
+    </div>
+  </div>
+
+  <!-- DEMO -->
+  <div class="demo-section reveal">
+    <div class="demo-header" style="color:var(--orange);">#️⃣ Interactive Hash Table — Insert &amp; Search</div>
+    <div class="demo-body">
+      <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1rem;">Hash function: <code class="text-mono" style="color:var(--orange);">h(key) = key % 7</code> · Table size: 7 · Collision resolution: Separate Chaining</p>
+      <div class="demo-controls">
+        <input type="number" id="hash-input" class="demo-input" placeholder="Integer key" style="width:130px;" />
+        <button id="hash-insert" class="btn btn-sm" style="background:linear-gradient(135deg,var(--orange),#cc5a00);color:#fff;">+ Insert</button>
+        <button id="hash-search" class="btn btn-sm" style="background:rgba(255,140,66,0.15);border:1px solid rgba(255,140,66,0.35);color:var(--orange);">🔍 Search</button>
+        <button id="hash-clear"  class="btn btn-secondary btn-sm">Clear Table</button>
+      </div>
+
+      <div style="margin-bottom:0.75rem;font-size:0.82rem;color:var(--text3);font-family:var(--font-mono);">Hash Table (Size = 7)</div>
+      <div class="hash-table-viz" id="hash-table"></div>
+
+      <div class="step-panel" id="hash-msg" style="margin-top:1rem;">Enter a key and click Insert to see the hash function in action.</div>
+
+      <!-- Collision explanation -->
+      <div class="concept-box mt2" style="background:rgba(255,90,90,0.06);border-color:rgba(255,90,90,0.2);">
+        <div class="concept-title" style="color:var(--red);">⚠ Collision Handling — Separate Chaining</div>
+        When two keys hash to the same index (e.g., 5 and 12 both hash to index 5), they are stored together in the same bucket as a chain. Try inserting: 5, 12, 19, 26 to see chaining in action!
+      </div>
+    </div>
+  </div>
+
+  <!-- Visual mapping diagram -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📐</span> How Hash Mapping Works</h2>
+    <div style="background:var(--bg2);border-radius:10px;padding:1.5rem;overflow-x:auto;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;min-width:400px;">
+        <!-- Keys -->
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end;">
+          <div style="font-size:0.7rem;color:var(--text3);text-align:right;margin-bottom:0.25rem;font-family:var(--font-mono);">KEYS</div>
+          <div style="background:rgba(255,140,66,0.1);border:1px solid rgba(255,140,66,0.2);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--orange);">42</div>
+          <div style="background:rgba(255,140,66,0.1);border:1px solid rgba(255,140,66,0.2);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--orange);">15</div>
+          <div style="background:rgba(255,140,66,0.1);border:1px solid rgba(255,140,66,0.2);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--orange);">7</div>
+        </div>
+        <!-- Arrow + Function -->
+        <div style="text-align:center;">
+          <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem;">HASH FUNCTION</div>
+          <div style="background:rgba(0,200,255,0.08);border:1px solid var(--border2);border-radius:8px;padding:0.6rem 1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--cyan);">key % 7</div>
+          <div style="font-size:1.2rem;margin-top:0.5rem;">→</div>
+        </div>
+        <!-- Indices -->
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:flex-start;">
+          <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.25rem;font-family:var(--font-mono);">INDEX</div>
+          <div style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--green);">42%7 = 0</div>
+          <div style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--green);">15%7 = 1</div>
+          <div style="background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);border-radius:6px;padding:0.4rem 0.75rem;font-family:var(--font-mono);color:var(--green);">7%7 = 0 ⚠</div>
+        </div>
+      </div>
+      <p style="color:var(--text3);font-size:0.8rem;text-align:center;margin-top:1rem;">42 and 7 both map to index 0 → collision! Resolved by chaining both values at index 0.</p>
+    </div>
+  </div>
+
+  <!-- Pseudocode -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Pseudocode</h2>
+    <div class="pseudocode">
+<span class="kw">class</span> <span class="fn">HashTable</span>:
+  SIZE = <span class="nm">7</span>
+  table = array of empty lists (size = SIZE)
+
+  <span class="kw">function</span> <span class="fn">hash</span>(key):
+    <span class="kw">return</span> key <span class="op">%</span> SIZE      <span class="cm">// Simple modulo hash</span>
+
+  <span class="kw">function</span> <span class="fn">insert</span>(key):
+    index = hash(key)
+    table[index].append(key)  <span class="cm">// Separate chaining</span>
+
+  <span class="kw">function</span> <span class="fn">search</span>(key):
+    index = hash(key)
+    <span class="kw">return</span> key <span class="kw">in</span> table[index]  <span class="cm">// Search only in bucket</span>
+
+  <span class="kw">function</span> <span class="fn">delete</span>(key):
+    index = hash(key)
+    table[index].remove(key)
+    </div>
+  </div>
+
+  <!-- Collision Methods -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🛡️</span> Collision Resolution Methods</h2>
+    <div class="two-col">
+      <div>
+        <p style="color:var(--orange);font-weight:600;margin-bottom:0.5rem;">Separate Chaining</p>
+        <p style="color:var(--text2);font-size:0.88rem;line-height:1.6;">Each bucket holds a list. Colliding elements are appended to the list at the same index. Lookup requires scanning the chain.</p>
+        <ul class="adv-list pros mt2">
+          <li>Simple to implement</li>
+          <li>No clustering issues</li>
+          <li>Table never "fills up"</li>
+        </ul>
+        <ul class="adv-list cons">
+          <li>Extra memory for linked list nodes</li>
+          <li>Poor cache performance</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--cyan);font-weight:600;margin-bottom:0.5rem;">Open Addressing</p>
+        <p style="color:var(--text2);font-size:0.88rem;line-height:1.6;">If a bucket is taken, probe for the next available slot using Linear Probing (i+1), Quadratic Probing (i²), or Double Hashing.</p>
+        <ul class="adv-list pros mt2">
+          <li>Better cache performance</li>
+          <li>No pointer overhead</li>
+        </ul>
+        <ul class="adv-list cons">
+          <li>Clustering can degrade performance</li>
+          <li>Deletion is tricky</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complexity -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📊</span> Time Complexity</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Operation</th><th>Average Case</th><th>Worst Case</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Insert</td><td class="good">O(1)</td><td class="bad">O(n)</td><td>Worst case: all keys hash to same index</td></tr>
+        <tr><td>Search</td><td class="good">O(1)</td><td class="bad">O(n)</td><td>Good hash function keeps chains short</td></tr>
+        <tr><td>Delete</td><td class="good">O(1)</td><td class="bad">O(n)</td><td>Same as search performance</td></tr>
+        <tr><td>Space</td><td>—</td><td class="mid">O(n)</td><td>n = number of key-value pairs stored</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Applications -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🌐</span> Real-World Applications</h2>
+    <ul class="adv-list pros" style="color:var(--text2);">
+      <li><strong>Dictionaries / Maps:</strong> Python dicts, JavaScript objects use hash tables internally</li>
+      <li><strong>Database Indexing:</strong> Hash indexes for O(1) record lookup by primary key</li>
+      <li><strong>Caches (DNS, CDN):</strong> Fast lookup of cached responses using hashed keys</li>
+      <li><strong>Cryptography:</strong> Cryptographic hash functions (SHA-256) for data integrity</li>
+      <li><strong>Compilers:</strong> Symbol tables storing variable names and their attributes</li>
+    </ul>
+  </div>
+
+  <div class="did-you-know reveal">
+    <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
+    <div class="dyk-content">
+      Python's dictionary was so well-designed that it was famously called "the fastest hash table implementation." In Python 3.6+, dicts also preserve insertion order — a combination of hash table efficiency AND linked list ordering. The average load factor before resizing is 2/3, balancing memory efficiency with collision frequency.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">DSA Interactive Dashboard</div>
+    <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
+    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

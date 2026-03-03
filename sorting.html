@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorting Algorithms · DSA Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">DSA Lab</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="searching.html">Searching</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="linkedlist.html">Linked List</a></li>
+    <li><a href="hashing.html">Hashing</a></li>
+    <li><a href="queue.html">Queue</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<main class="page-container">
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Dashboard</a>
+    <h1>⚙️ <span>Sorting</span> Algorithms</h1>
+    <p>Sorting algorithms arrange elements in a specific order. Visualize Bubble Sort, Selection Sort, Insertion Sort, and Merge Sort with animated bar charts.</p>
+  </div>
+
+  <!-- Overview -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📖</span> Overview</h2>
+    <p style="color:var(--text2);font-size:0.95rem;line-height:1.8;">
+      Sorting is fundamental to computer science — sorted data enables binary search, improves cache performance, and is required by many algorithms. Each sorting algorithm makes different trade-offs between time complexity, space complexity, and stability.
+    </p>
+    <div class="concept-box mt2">
+      <div class="concept-title">💡 Key Concept</div>
+      A <strong>stable</strong> sort preserves the relative order of elements with equal keys. Merge Sort is stable; Selection Sort is not. Stability matters when sorting objects by multiple fields.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SORTING DEMO
+  ══════════════════════════════════ -->
+  <div class="demo-section reveal">
+    <div class="demo-header">🎯 Sorting Visualizer — Step by Step</div>
+    <div class="demo-body">
+      <div class="demo-controls">
+        <input type="text" id="sort-array" class="demo-input" value="38, 27, 43, 10, 5, 8, 3, 25" placeholder="Array (comma separated)" style="width:280px;" />
+        <select id="sort-algo" class="demo-input" style="width:160px;">
+          <option value="bubble">Bubble Sort</option>
+          <option value="selection">Selection Sort</option>
+          <option value="insertion">Insertion Sort</option>
+          <option value="merge">Merge Sort</option>
+        </select>
+        <button id="sort-start" class="btn btn-primary btn-sm">▶ Start</button>
+        <button id="sort-next"  class="btn btn-secondary btn-sm" disabled>Next →</button>
+        <button id="sort-auto"  class="btn btn-secondary btn-sm">▶ Auto Play</button>
+        <button id="sort-reset" class="btn btn-secondary btn-sm">↺ Reset</button>
+      </div>
+
+      <div class="step-counter" id="sort-step-count">Step 0 / 0</div>
+      <div class="progress-bar"><div class="progress-fill" id="sort-progress" style="width:0%"></div></div>
+
+      <!-- Bar Chart Visualization -->
+      <div class="bar-container" id="sort-bars" style="margin-bottom:1rem;">
+        <span style="color:var(--text3);font-size:0.85rem;">Press Start to begin visualization</span>
+      </div>
+
+      <div class="step-panel" id="sort-msg">Select an algorithm and press <strong>Start</strong>.</div>
+
+      <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:0.75rem;font-size:0.78rem;color:var(--text3);">
+        <span><span style="display:inline-block;width:14px;height:14px;background:rgba(0,200,255,0.65);border-radius:3px;vertical-align:middle;margin-right:4px;"></span>Active</span>
+        <span><span style="display:inline-block;width:14px;height:14px;background:rgba(255,209,102,0.5);border-radius:3px;vertical-align:middle;margin-right:4px;"></span>Comparing</span>
+        <span><span style="display:inline-block;width:14px;height:14px;background:rgba(0,229,160,0.4);border-radius:3px;vertical-align:middle;margin-right:4px;"></span>Sorted</span>
+        <span><span style="display:inline-block;width:14px;height:14px;background:rgba(0,200,255,0.2);border-radius:3px;vertical-align:middle;margin-right:4px;"></span>Unsorted</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Algorithm Explanations -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Bubble Sort</h2>
+    <p style="color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Repeatedly compare adjacent elements and swap them if they're in the wrong order. After each pass, the largest unsorted element "bubbles up" to its correct position.</p>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">bubbleSort</span>(arr):
+  n = arr.length
+  <span class="kw">for</span> i = 0 <span class="kw">to</span> n-1:
+    <span class="kw">for</span> j = 0 <span class="kw">to</span> n-i-2:
+      <span class="kw">if</span> arr[j] > arr[j+<span class="nm">1</span>]:
+        swap(arr[j], arr[j+<span class="nm">1</span>])
+    </div>
+  </div>
+
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Selection Sort</h2>
+    <p style="color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Find the minimum element in the unsorted portion and place it at the beginning. Repeat until fully sorted. Makes O(n) swaps — better than Bubble Sort when writes are expensive.</p>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">selectionSort</span>(arr):
+  n = arr.length
+  <span class="kw">for</span> i = 0 <span class="kw">to</span> n-1:
+    minIdx = i
+    <span class="kw">for</span> j = i+<span class="nm">1</span> <span class="kw">to</span> n-1:
+      <span class="kw">if</span> arr[j] < arr[minIdx]:
+        minIdx = j
+    swap(arr[i], arr[minIdx])
+    </div>
+  </div>
+
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Insertion Sort</h2>
+    <p style="color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Build the sorted array one element at a time by inserting each new element into its correct position. Excellent for small or nearly-sorted arrays — used in practice for small subarrays within larger sorts.</p>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">insertionSort</span>(arr):
+  <span class="kw">for</span> i = 1 <span class="kw">to</span> n-1:
+    key = arr[i]
+    j = i - <span class="nm">1</span>
+    <span class="kw">while</span> j >= 0 <span class="kw">and</span> arr[j] > key:
+      arr[j+<span class="nm">1</span>] = arr[j]
+      j = j - <span class="nm">1</span>
+    arr[j+<span class="nm">1</span>] = key
+    </div>
+  </div>
+
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Merge Sort</h2>
+    <p style="color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Divide the array in half recursively until single elements remain, then merge sorted halves back together. Guarantees O(n log n) in all cases. Stable and widely used in production systems.</p>
+    <div class="pseudocode">
+<span class="kw">function</span> <span class="fn">mergeSort</span>(arr):
+  <span class="kw">if</span> arr.length <= <span class="nm">1</span>: <span class="kw">return</span> arr
+  mid = floor(arr.length / <span class="nm">2</span>)
+  left  = mergeSort(arr[0..mid])
+  right = mergeSort(arr[mid..end])
+  <span class="kw">return</span> merge(left, right)
+
+<span class="kw">function</span> <span class="fn">merge</span>(left, right):
+  result = []
+  <span class="kw">while</span> both arrays have elements:
+    <span class="kw">if</span> left[0] <= right[0]: append left[0]
+    <span class="kw">else</span>: append right[0]
+  append remaining elements
+  <span class="kw">return</span> result
+    </div>
+  </div>
+
+  <!-- Complexity Table -->
+  <div class="content-section reveal">
+    <h2><span class="icon">📊</span> Complexity Comparison</h2>
+    <table class="complexity-table">
+      <thead><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th><th>Stable?</th></tr></thead>
+      <tbody>
+        <tr><td>Bubble Sort</td><td class="good">O(n)</td><td class="bad">O(n²)</td><td class="bad">O(n²)</td><td class="good">O(1)</td><td>Yes</td></tr>
+        <tr><td>Selection Sort</td><td class="bad">O(n²)</td><td class="bad">O(n²)</td><td class="bad">O(n²)</td><td class="good">O(1)</td><td>No</td></tr>
+        <tr><td>Insertion Sort</td><td class="good">O(n)</td><td class="bad">O(n²)</td><td class="bad">O(n²)</td><td class="good">O(1)</td><td>Yes</td></tr>
+        <tr><td>Merge Sort</td><td class="mid">O(n log n)</td><td class="mid">O(n log n)</td><td class="mid">O(n log n)</td><td class="mid">O(n)</td><td>Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Advantages / Disadvantages -->
+  <div class="content-section reveal">
+    <h2><span class="icon">⚖️</span> Advantages &amp; Disadvantages</h2>
+    <div class="two-col">
+      <div>
+        <ul class="adv-list pros">
+          <li>Bubble/Insertion: Simple, great for small data</li>
+          <li>Insertion Sort: Adaptive, fast on nearly-sorted data</li>
+          <li>Merge Sort: O(n log n) guaranteed, stable</li>
+          <li>Selection Sort: Minimizes number of swaps</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="adv-list cons">
+          <li>Bubble/Selection/Insertion: O(n²) for large data</li>
+          <li>Merge Sort: Requires O(n) extra memory</li>
+          <li>None are in-place AND optimal simultaneously</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-World -->
+  <div class="content-section reveal">
+    <h2><span class="icon">🌐</span> Real-World Applications</h2>
+    <ul class="adv-list pros" style="color:var(--text2);">
+      <li><strong>Merge Sort:</strong> Used in Python's Timsort (hybrid algorithm), Java's Arrays.sort for objects</li>
+      <li><strong>Insertion Sort:</strong> Used internally for small arrays by many sorting libraries</li>
+      <li><strong>Sorting in general:</strong> Database query optimization, file system organization, e-commerce product sorting</li>
+      <li><strong>Sorting in general:</strong> Genomics (sorting DNA sequences), rendering pipelines (depth sorting)</li>
+    </ul>
+  </div>
+
+  <div class="did-you-know reveal">
+    <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
+    <div class="dyk-content">
+      No comparison-based sorting algorithm can beat O(n log n) in the worst case — this is mathematically proven! However, non-comparison sorts like Radix Sort and Counting Sort can sort integers in O(n) time by exploiting the structure of the data rather than comparing elements.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">DSA Interactive Dashboard</div>
+    <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
+    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
