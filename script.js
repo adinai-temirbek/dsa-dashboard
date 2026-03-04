@@ -203,97 +203,227 @@ let sortSteps = [], sortIdx = 0, sortTimer = null;
 
 function generateSortSteps(arr, algo) {
   const steps = [];
-  const a = [...arr];
+  let a = [...arr]; // Рабочая копия массива
 
-  function snap(active, comparing, sorted, msg, pivot) {
-    steps.push({ arr: [...a], active: active ?? [], comparing: comparing ?? [], sorted: sorted ?? [], msg, pivot: pivot ?? -1 });
-  }
+  // Универсальная функция snap для фиксации состояния
+  const snap = (active = [], comparing = [], sorted = [], msg = '', pivot = -1) => {
+    steps.push({
+      arr: [...a],
+      active: Array.isArray(active) ? active : [active],
+      comparing: Array.isArray(comparing) ? comparing : [comparing],
+      sorted: Array.isArray(sorted) ? sorted : [sorted],
+      msg,
+      pivot: pivot ?? -1
+    });
+  };
 
+  // ── Bubble Sort ──
   if (algo === 'bubble') {
     const sortedSet = new Set();
     snap([], [], [], 'Starting Bubble Sort...');
     for (let i = 0; i < a.length - 1; i++) {
       for (let j = 0; j < a.length - i - 1; j++) {
-        snap([j, j+1], [], [...sortedSet], `Comparing <strong>${a[j]}</strong> and <strong>${a[j+1]}</strong>`);
-        if (a[j] > a[j+1]) {
-          [a[j], a[j+1]] = [a[j+1], a[j]];
-          snap([j, j+1], [], [...sortedSet], `Swapped → <strong>${a[j]}</strong> and <strong>${a[j+1]}</strong>`);
+        snap([j, j + 1], [], [...sortedSet], `Comparing ${a[j]} and ${a[j + 1]}`);
+        if (a[j] > a[j + 1]) {
+          [a[j], a[j + 1]] = [a[j + 1], a[j]];
+          snap([j, j + 1], [], [...sortedSet], `Swapped → ${a[j]} and ${a[j + 1]}`);
         }
       }
       sortedSet.add(a.length - 1 - i);
-      snap([], [], [...sortedSet], `Pass ${i+1} complete. Element <strong>${a[a.length-1-i]}</strong> is in correct position.`);
+      snap([], [], [...sortedSet], `Pass ${i + 1} complete. Largest element in place.`);
     }
-    sortedSet.add(0);
-    snap([], [], [...Array(a.length).keys()], 'Array is fully sorted! ✓');
+    snap([], [], [...Array(a.length).keys()], 'Bubble Sort completed! ✓');
   }
 
+  // ── Selection Sort ──
   else if (algo === 'selection') {
     const sortedSet = new Set();
     snap([], [], [], 'Starting Selection Sort...');
     for (let i = 0; i < a.length - 1; i++) {
       let minIdx = i;
-      snap([i], [], [...sortedSet], `Find minimum element starting from index ${i}`);
+      snap([i], [], [...sortedSet], `Finding min from index ${i}`);
       for (let j = i + 1; j < a.length; j++) {
-        snap([minIdx, j], [], [...sortedSet], `Comparing current min <strong>${a[minIdx]}</strong> with <strong>${a[j]}</strong>`);
-        if (a[j] < a[minIdx]) { minIdx = j; snap([minIdx], [], [...sortedSet], `New minimum found: <strong>${a[minIdx]}</strong> at index ${minIdx}`); }
+        snap([minIdx, j], [], [...sortedSet], `Comparing ${a[minIdx]} vs ${a[j]}`);
+        if (a[j] < a[minIdx]) minIdx = j;
       }
       if (minIdx !== i) {
         [a[i], a[minIdx]] = [a[minIdx], a[i]];
-        snap([i, minIdx], [], [...sortedSet], `Swapping min <strong>${a[i]}</strong> to position ${i}`);
+        snap([i, minIdx], [], [...sortedSet], `Placed min at position ${i}`);
       }
       sortedSet.add(i);
-      snap([], [], [...sortedSet], `Position ${i} is sorted: <strong>${a[i]}</strong>`);
     }
-    sortedSet.add(a.length - 1);
-    snap([], [], [...Array(a.length).keys()], 'Array is fully sorted! ✓');
+    snap([], [], [...Array(a.length).keys()], 'Selection Sort completed! ✓');
   }
 
+  // ── Insertion Sort ──
   else if (algo === 'insertion') {
     const sortedSet = new Set([0]);
-    snap([], [], [...sortedSet], 'Starting Insertion Sort. First element is trivially sorted.');
+    snap([], [], [...sortedSet], 'Starting Insertion Sort...');
     for (let i = 1; i < a.length; i++) {
       const key = a[i];
-      snap([i], [], [...sortedSet], `Picking key = <strong>${key}</strong> at index ${i}`);
       let j = i - 1;
+      snap([i], [], [...sortedSet], `Inserting ${key}`);
       while (j >= 0 && a[j] > key) {
         a[j + 1] = a[j];
-        snap([j+1, j], [], [...sortedSet], `Shifting <strong>${a[j]}</strong> one position right`);
+        snap([j + 1, j], [], [...sortedSet], `Shifting ${a[j]}`);
         j--;
       }
       a[j + 1] = key;
       sortedSet.add(i);
-      snap([j+1], [], [...sortedSet], `Inserted <strong>${key}</strong> at position ${j+1}`);
+      snap([j + 1], [], [...sortedSet], `Inserted ${key}`);
     }
-    snap([], [], [...Array(a.length).keys()], 'Array is fully sorted! ✓');
+    snap([], [], [...Array(a.length).keys()], 'Insertion Sort completed! ✓');
   }
 
+  // ── Merge Sort ── (улучшенная версия)
   else if (algo === 'merge') {
-    // Simplified bottom-up merge visualization
-    snap([], [], [], 'Starting Merge Sort. Divide array into halves...');
-    const mid = Math.floor(a.length / 2);
-    const left = a.slice(0, mid), right = a.slice(mid);
-    snap(left.map((_, i) => i), [], [], `Left half: [${left.join(', ')}]`);
-    snap(right.map((_, i) => mid + i), [], [], `Right half: [${right.join(', ')}]`);
-    left.sort((x, y) => x - y);
-    right.sort((x, y) => x - y);
-    snap(left.map((_, i) => i), [], [], `Left half sorted: [${left.join(', ')}]`);
-    snap(right.map((_, i) => mid + i), [], [], `Right half sorted: [${right.join(', ')}]`);
-    // merge
-    let li = 0, ri = 0, k = 0;
-    snap([], [], [], `Merging left [${left.join(', ')}] and right [${right.join(', ')}]`);
-    while (li < left.length && ri < right.length) {
-      if (left[li] <= right[ri]) { a[k++] = left[li++]; }
-      else { a[k++] = right[ri++]; }
-      snap(Array.from({length: k}, (_, i) => i), [], [], `Merged so far: [${a.slice(0,k).join(', ')}]`);
+    function mergeSortHelper(start, end) {
+      if (end - start <= 1) return;
+
+      const mid = Math.floor((start + end) / 2);
+      snap([], [], [], `Dividing [${a.slice(start, end).join(', ')}]`);
+
+      mergeSortHelper(start, mid);
+      mergeSortHelper(mid, end);
+
+      // Merge
+      const left = a.slice(start, mid);
+      const right = a.slice(mid, end);
+      let i = 0, j = 0, k = start;
+
+      snap([], [], [], `Merging left [${left.join(', ')}] and right [${right.join(', ')}]`);
+
+      while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+          a[k++] = left[i++];
+        } else {
+          a[k++] = right[j++];
+        }
+        snap(Array.from({ length: k - start }, (_, idx) => start + idx), [], [], `Merged: ${a.slice(start, k).join(', ')}`);
+      }
+      while (i < left.length) a[k++] = left[i++];
+      while (j < right.length) a[k++] = right[j++];
     }
-    while (li < left.length) { a[k++] = left[li++]; snap(Array.from({length: k}, (_, i) => i), [], [], `Remaining left: [${a.slice(0,k).join(', ')}]`); }
-    while (ri < right.length) { a[k++] = right[ri++]; snap(Array.from({length: k}, (_, i) => i), [], [], `Remaining right: [${a.slice(0,k).join(', ')}]`); }
-    snap([], [], [...Array(a.length).keys()], 'Merge Sort complete! Array sorted ✓');
+
+    snap([], [], [], 'Starting Merge Sort...');
+    mergeSortHelper(0, a.length);
+    snap([], [], [...Array(a.length).keys()], 'Merge Sort completed! ✓');
+  }
+
+  // ── Quick Sort ──
+  else if (algo === 'quick') {
+    function quickHelper(low, high) {
+      if (low >= high) return;
+
+      const pivotIdx = high;
+      const pivot = a[pivotIdx];
+      let i = low - 1;
+
+      snap([], [], [], `Pivot = ${pivot} (index ${pivotIdx})`);
+
+      for (let j = low; j < high; j++) {
+        snap([j, pivotIdx], [i + 1], [], `Comparing ${a[j]} with pivot`);
+        if (a[j] < pivot) {
+          i++;
+          if (i !== j) {
+            [a[i], a[j]] = [a[j], a[i]];
+            snap([i, j], [], [], `Swapped ${a[i]} and ${a[j]}`);
+          }
+        }
+      }
+      [a[i + 1], a[high]] = [a[high], a[i + 1]];
+      const pi = i + 1;
+
+      snap([pi], [], [], `Pivot placed at ${pi}`);
+
+      quickHelper(low, pi - 1);
+      quickHelper(pi + 1, high);
+    }
+
+    snap([], [], [], 'Starting Quick Sort...');
+    quickHelper(0, a.length - 1);
+    snap([], [], [...Array(a.length).keys()], 'Quick Sort completed! ✓');
+  }
+
+  // ── COUNTING SORT ── (исправлено!)
+  else if (algo === 'counting') {
+    if (a.length === 0) return steps;
+
+    const min = Math.min(...a);
+    const max = Math.max(...a);
+    const range = max - min + 1;
+    const count = new Array(range).fill(0);
+    const output = new Array(a.length).fill(0);
+
+    snap([], [], [], `Counting Sort: range ${min} to ${max}`);
+
+    // Шаг 1: Подсчёт
+    for (let num of a) {
+      count[num - min]++;
+    }
+    snap([], [], [], `Count array: [${count.join(', ')}]`);
+
+    // Шаг 2: Префиксная сумма
+    for (let i = 1; i < count.length; i++) {
+      count[i] += count[i - 1];
+    }
+    snap([], [], [], `Cumulative count: [${count.join(', ')}]`);
+
+    // Шаг 3: Построение результата (справа налево)
+    for (let i = a.length - 1; i >= 0; i--) {
+      const digit = a[i] - min;
+      const pos = count[digit] - 1;
+      output[pos] = a[i];
+      count[digit]--;
+      snap([], [], [pos], `Placed ${a[i]} at position ${pos}`);
+    }
+
+    a = output;
+    snap([], [], [...Array(a.length).keys()], 'Counting Sort completed! ✓ (O(n + k))');
+  }
+
+  // ── RADIX SORT ── (исправлено!)
+  else if (algo === 'radix') {
+    if (a.length === 0) return steps;
+
+    const max = Math.max(...a);
+    let exp = 1;
+
+    snap([], [], [], `Starting Radix Sort (LSD) - max = ${max}`);
+
+    while (Math.floor(max / exp) > 0) {
+      const output = new Array(a.length).fill(0);
+      const count = new Array(10).fill(0);
+
+      snap([], [], [], `Digit place = ${exp}`);
+
+      // Подсчёт цифр
+      for (let i = 0; i < a.length; i++) {
+        const digit = Math.floor(a[i] / exp) % 10;
+        count[digit]++;
+      }
+
+      // Префиксная сумма
+      for (let i = 1; i < 10; i++) count[i] += count[i - 1];
+
+      // Распределение
+      for (let i = a.length - 1; i >= 0; i--) {
+        const digit = Math.floor(a[i] / exp) % 10;
+        output[count[digit] - 1] = a[i];
+        count[digit]--;
+      }
+
+      a = output;
+      snap([], [], [], `After digit ${exp}: [${a.join(', ')}]`);
+
+      exp *= 10;
+    }
+
+    snap([], [], [...Array(a.length).keys()], 'Radix Sort completed! ✓ (O(nk))');
   }
 
   return steps;
 }
-
 function initSorting() {
   const startBtn = document.getElementById('sort-start');
   if (!startBtn) return;
