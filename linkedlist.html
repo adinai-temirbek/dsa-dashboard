@@ -33,15 +33,15 @@
   <div class="content-section reveal">
     <h2><span class="icon">📖</span> Overview</h2>
     <p style="color:var(--text2);font-size:0.95rem;line-height:1.8;">
-      Linked lists consist of <strong class="text-cyan">nodes</strong>, each containing a data value and a <strong class="text-cyan">pointer</strong> (reference) to the next node. The first node is the <strong>head</strong>; the last node points to <strong>null</strong>. They allow efficient insertion and deletion at any position — no shifting required!
+      Linked lists consist of <strong class="text-cyan">nodes</strong>, each containing a data value and a <strong class="text-cyan">pointer</strong> (reference) to the next node. The first node is the <strong>head</strong>; the last node points to <strong>null</strong> (in singly/doubly) or back to head (in circular). They allow efficient insertion and deletion at any position — no shifting required!
     </p>
     <div class="concept-box mt2">
       <div class="concept-title">💡 Node Structure</div>
-      Each node = [DATA | NEXT →]. The head pointer points to the first node. The last node's NEXT pointer is NULL, marking the end of the list.
+      Each node = [DATA | NEXT →]. In circular lists, the last node points back to the first (head), forming a ring.
     </div>
   </div>
 
-  <!-- DEMO -->
+  <!-- DEMO (оставляем как есть) -->
   <div class="demo-section reveal">
     <div class="demo-header" style="color:#ff4f9b;">🔗 Interactive Linked List — Insert &amp; Delete Nodes</div>
     <div class="demo-body">
@@ -57,7 +57,6 @@
         <span id="ll-size" style="color:var(--text3);font-size:0.82rem;font-family:var(--font-mono);">Size: 0 nodes</span>
       </div>
 
-      <!-- Linked List Visualization -->
       <div style="background:var(--bg2);border-radius:10px;padding:1rem 0.5rem;margin-bottom:1rem;">
         <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.75rem;padding-left:1rem;font-family:var(--font-mono);">HEAD →</div>
         <div class="ll-viz" id="ll-viz" style="padding:0.75rem 1rem;"></div>
@@ -67,11 +66,12 @@
     </div>
   </div>
 
-  <!-- Singly vs Doubly -->
+  <!-- Singly vs Doubly vs Circular -->
   <div class="content-section reveal">
-    <h2><span class="icon">🔄</span> Singly vs Doubly Linked List</h2>
-    <div class="two-col">
-      <div>
+    <h2><span class="icon">🔄</span> Types of Linked Lists</h2>
+    <div class="three-col">
+      <!-- Singly -->
+      <div class="ll-type">
         <p style="color:var(--cyan);font-weight:600;margin-bottom:0.75rem;">Singly Linked List</p>
         <div style="background:var(--bg2);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.8rem;">
           <div style="display:flex;align-items:center;gap:0;flex-wrap:nowrap;overflow-x:auto;">
@@ -83,18 +83,63 @@
           </div>
         </div>
         <ul class="adv-list pros mt2">
-          <li>Simple structure</li>
-          <li>Less memory per node</li>
-          <li>Traversal: forward only</li>
+          <li>Simple</li>
+          <li>Less memory</li>
         </ul>
         <ul class="adv-list cons">
-          <li>Cannot traverse backward</li>
-          <li>Deletion of prev node is O(n)</li>
+          <li>Forward only</li>
+          <li>Delete prev = O(n)</li>
         </ul>
       </div>
-      <div>
+
+      <!-- Doubly -->
+      <div class="ll-type">
         <p style="color:var(--teal);font-weight:600;margin-bottom:0.75rem;">Doubly Linked List</p>
         <div style="background:var(--bg2);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.75rem;">
+          <div style="display:flex;align-items:center;gap:2px;flex-wrap:nowrap;overflow-x:auto;">
+            <div style="border:1px solid rgba(0,255,204,0.25);border-radius:6px;overflow:hidden;display:flex;">
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">NULL</span>
+              <span style="padding:0.4rem 0.5rem;background:rgba(0,255,204,0.1);color:var(--teal);font-weight:700;">10</span>
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">→</span>
+            </div>
+            <span style="color:var(--border2);font-size:0.9rem;">⟺</span>
+            <div style="border:1px solid rgba(0,255,204,0.25);border-radius:6px;overflow:hidden;display:flex;">
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">←</span>
+              <span style="padding:0.4rem 0.5rem;background:rgba(0,255,204,0.1);color:var(--teal);font-weight:700;">20</span>
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">→</span>
+            </div>
+            <span style="color:var(--border2);font-size:0.9rem;">⟺</span>
+            <div style="border:1px solid rgba(0,255,204,0.25);border-radius:6px;overflow:hidden;display:flex;">
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">←</span>
+              <span style="padding:0.4rem 0.5rem;background:rgba(0,255,204,0.1);color:var(--teal);font-weight:700;">30</span>
+              <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">NULL </span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <ul class="adv-list pros mt2">
+          <li>Bidirectional</li>
+          <li>O(1) delete with pointer</li>
+        </ul>
+        <ul class="adv-list cons">
+          <li>Extra prev pointer</li>
+          <li>More complex</li>
+        </ul>
+      </div>
+
+      <!-- Circular -->
+      <div class="ll-type">
+        <p style="color:var(--purple);font-weight:600;margin-bottom:0.75rem;">Circular Linked List</p>
+        <div style="background:var(--bg2);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.75rem;">
+          <div style="background:var(--bg2);border-radius:10px;padding:1rem;font-family:var(--font-mono);font-size:0.8rem;">
+            <div style="display:flex;align-items:center;gap:0;flex-wrap:nowrap;overflow-x:auto;">
+              <div class="ll-box"><span class="ll-data">10</span><span class="ll-next">→</span></div>
+              <div style="color:var(--border2);margin:0 4px;">──▶</div>
+              <div class="ll-box"><span class="ll-data">20</span><span class="ll-next">→</span></div>
+              <div style="color:var(--border2);margin:0 4px;">──▶</div>
+              <div class="ll-box"><span class="ll-data">30</span><span class="ll-next">→</span></div>
+            </div>
+          </div>
           <div style="display:flex;align-items:center;gap:2px;flex-wrap:nowrap;overflow-x:auto;">
             <div style="border:1px solid rgba(0,255,204,0.25);border-radius:6px;overflow:hidden;display:flex;">
               <span style="padding:0.4rem 0.4rem;background:rgba(0,255,204,0.06);color:var(--text3);">←</span>
@@ -115,14 +160,15 @@
             </div>
           </div>
         </div>
+        </div>
         <ul class="adv-list pros mt2">
-          <li>Bidirectional traversal</li>
-          <li>O(1) deletion with node reference</li>
-          <li>Flexible insertions</li>
+          <li>Loop traversal (no null end)</li>
+          <li>Used in round-robin scheduling</li>
+          <li>Efficient circular buffers</li>
         </ul>
         <ul class="adv-list cons">
-          <li>Extra memory for prev pointer</li>
-          <li>More complex implementation</li>
+          <li>No natural end → risk of infinite loop</li>
+          <li>Deletion/insertion more careful</li>
         </ul>
       </div>
     </div>
@@ -132,33 +178,42 @@
   <div class="content-section reveal">
     <h2><span class="icon">📝</span> Pseudocode — Core Operations</h2>
     <div class="pseudocode">
-<span class="kw">class</span> <span class="fn">Node</span>:
-  data  = value
-  next  = null
+      <span class="kw">class</span> <span class="fn">Node</span>:
+      data  = value
+      next  = null           <span class="cm">// singly</span>
+      prev  = null           <span class="cm">// doubly</span>
 
-<span class="kw">class</span> <span class="fn">LinkedList</span>:
-  head = null
+      <span class="kw">class</span> <span class="fn">CircularLinkedList</span>:
+      head = null
 
-  <span class="kw">function</span> <span class="fn">insertAtHead</span>(value):
-    node = <span class="kw">new</span> Node(value)
-    node.next = head
-    head = node              <span class="cm">// O(1)</span>
-
-  <span class="kw">function</span> <span class="fn">insertAtTail</span>(value):
-    node = <span class="kw">new</span> Node(value)
-    <span class="kw">if</span> head == null: head = node; <span class="kw">return</span>
-    curr = head
-    <span class="kw">while</span> curr.next != null:
+      <span class="kw">function</span> <span class="fn">insert</span>(value):
+      node = <span class="kw">new</span> Node(value)
+      <span class="kw">if</span> head == null:
+      head = node
+      node.next = head           <span class="cm">// замыкаем круг</span>
+      <span class="kw">else</span>:
+      curr = head
+      <span class="kw">while</span> curr.next != head:
       curr = curr.next
-    curr.next = node         <span class="cm">// O(n)</span>
+      curr.next = node
+      node.next = head           <span class="cm">// замыкаем</span>
 
-  <span class="kw">function</span> <span class="fn">delete</span>(value):
-    <span class="kw">if</span> head.data == value: head = head.next; <span class="kw">return</span>
-    curr = head
-    <span class="kw">while</span> curr.next != null:
+      <span class="kw">function</span> <span class="fn">delete</span>(value):
+      <span class="kw">if</span> head == null: <span class="kw">return</span>
+      <span class="kw">if</span> head.data == value:
+      <span class="kw">if</span> head.next == head: head = null
+      <span class="kw">else</span>:
+      curr = head
+      <span class="kw">while</span> curr.next != head:
+      curr = curr.next
+      curr.next = head.next
+      head = head.next
+      <span class="kw">return</span>
+      curr = head
+      <span class="kw">while</span> curr.next != head:
       <span class="kw">if</span> curr.next.data == value:
-        curr.next = curr.next.next <span class="cm">// Skip the node</span>
-        <span class="kw">return</span>
+      curr.next = curr.next.next
+      <span class="kw">return</span>
       curr = curr.next
     </div>
   </div>
@@ -167,13 +222,13 @@
   <div class="content-section reveal">
     <h2><span class="icon">📊</span> Time &amp; Space Complexity</h2>
     <table class="complexity-table">
-      <thead><tr><th>Operation</th><th>Singly LL</th><th>Array</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Operation</th><th>Singly</th><th>Doubly</th><th>Circular</th><th>Array</th><th>Notes</th></tr></thead>
       <tbody>
-        <tr><td>Insert at Head</td><td class="good">O(1)</td><td class="bad">O(n)</td><td>LL wins — no shifting</td></tr>
-        <tr><td>Insert at Tail</td><td class="mid">O(n)*</td><td class="good">O(1)*</td><td>*O(1) with tail pointer</td></tr>
-        <tr><td>Delete</td><td class="mid">O(n)</td><td class="bad">O(n)</td><td>Both require traversal/shift</td></tr>
-        <tr><td>Random Access</td><td class="bad">O(n)</td><td class="good">O(1)</td><td>Array wins — index arithmetic</td></tr>
-        <tr><td>Space</td><td class="mid">O(n) + ptrs</td><td class="good">O(n)</td><td>LL overhead: pointer per node</td></tr>
+      <tr><td>Insert at Head</td><td class="good">O(1)</td><td class="good">O(1)</td><td class="good">O(1)</td><td class="bad">O(n)</td><td>LL wins</td></tr>
+      <tr><td>Insert at Tail</td><td class="mid">O(n)</td><td class="good">O(1)*</td><td class="mid">O(n)</td><td class="good">O(1)*</td><td>*with tail pointer</td></tr>
+      <tr><td>Delete by Value</td><td class="mid">O(n)</td><td class="mid">O(n)</td><td class="mid">O(n)</td><td class="bad">O(n)</td><td>Traversal needed</td></tr>
+      <tr><td>Random Access</td><td class="bad">O(n)</td><td class="bad">O(n)</td><td class="bad">O(n)</td><td class="good">O(1)</td><td>Array wins</td></tr>
+      <tr><td>Space Overhead</td><td class="good">1 pointer</td><td class="mid">2 pointers</td><td class="mid">1–2 pointers</td><td class="good">None</td><td>LL overhead</td></tr>
       </tbody>
     </table>
   </div>
@@ -182,18 +237,19 @@
   <div class="content-section reveal">
     <h2><span class="icon">🌐</span> Real-World Applications</h2>
     <ul class="adv-list pros" style="color:var(--text2);">
-      <li><strong>Music/Video Playlists:</strong> Each song links to the next; doubly-linked enables prev/next navigation</li>
-      <li><strong>Browser Navigation:</strong> Forward/back history implemented as a doubly linked list</li>
-      <li><strong>Memory Allocators:</strong> Free lists in OS memory management</li>
-      <li><strong>Polynomial Arithmetic:</strong> Each term is a node; used in symbolic math systems</li>
-      <li><strong>Undo Buffers:</strong> Each action stored as a node in an editor's history list</li>
+      <li><strong>Music/Video Playlists:</strong> Doubly/Circular linked lists for next/prev + loop playback</li>
+      <li><strong>Browser History:</strong> Doubly linked list for forward/back navigation</li>
+      <li><strong>Round-Robin Scheduling:</strong> Circular linked list for cycling through processes</li>
+      <li><strong>Undo/Redo Buffers:</strong> Doubly linked list in text editors</li>
+      <li><strong>Memory Management:</strong> Free lists in OS kernels</li>
+      <li><strong>Circular Buffers:</strong> Audio streaming, network packet queues</li>
     </ul>
   </div>
 
   <div class="did-you-know reveal">
     <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
     <div class="dyk-content">
-      The Linked List was invented by Allen Newell, Cliff Shaw, and Herbert Simon around 1955–1956 as part of their IPL (Information Processing Language) for AI research. The concept was radical at the time — using memory addresses as pointers was a new idea. Their work eventually contributed to Simon and Newell winning the Turing Award in 1975.
+      Circular Linked Lists are widely used in operating systems for <strong>round-robin CPU scheduling</strong>, where processes are cycled in a ring. Each process gets a time slice, then the pointer moves to the next — efficient and fair! The concept also powers many circular buffers in audio/video streaming to avoid shifting data.
     </div>
   </div>
 </main>
@@ -202,7 +258,7 @@
   <div class="footer-inner">
     <div class="footer-title">DSA Interactive Dashboard</div>
     <p>Created by <strong>Adinai Temirbekova</strong> &amp; <strong>Ailin Adylova</strong><br>
-    Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
+      Instructor: <strong>Muhammad Fayaz</strong> · Data Structures Dashboard Project – 2026</p>
   </div>
 </footer>
 
