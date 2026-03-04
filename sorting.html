@@ -148,6 +148,63 @@
     </div>
   </div>
 
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Radix Sort</h2>
+<!--    <p style="color:var(&#45;&#45;text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Divide the array in half recursively until single elements remain, then merge sorted halves back together. Guarantees O(n log n) in all cases. Stable and widely used in production systems.</p>-->
+    <div class="pseudocode">
+      <span class="kw">function</span> <span class="fn">radixSort</span>(arr):
+      <span class="kw">if</span> arr.length ≤ 1: <span class="kw">return</span>
+      max = <span class="kw">findMax</span>(arr)
+      exp = 1
+      <span class="kw">while</span> floor(max / exp) > 0:
+      count = <span class="kw">new</span> array[10] initialized to 0
+      output = <span class="kw">new</span> array[arr.length]
+
+      <span class="cm">// Count occurrences of current digit</span>
+      <span class="kw">for</span> i = 0 <span class="kw">to</span> arr.length-1:
+      digit = floor(arr[i] / exp) % 10
+      count[digit]++
+
+      <span class="cm">// Build cumulative count</span>
+      <span class="kw">for</span> i = 1 <span class="kw">to</span> 9:
+      count[i] += count[i-1]
+
+      <span class="cm">// Build output array (stable sort)</span>
+      <span class="kw">for</span> i = arr.length-1 <span class="kw">down to</span> 0:
+      digit = floor(arr[i] / exp) % 10
+      output[count[digit]-1] = arr[i]
+      count[digit]--
+
+      arr = output
+      exp *= 10
+    </div>
+  </div>
+
+  <div class="content-section reveal">
+    <h2><span class="icon">📝</span> Quick Sort</h2>
+    <!--    <p style="color:var(&#45;&#45;text2);font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Divide the array in half recursively until single elements remain, then merge sorted halves back together. Guarantees O(n log n) in all cases. Stable and widely used in production systems.</p>-->
+    <div class="pseudocode">
+      <span class="kw">function</span> <span class="fn">quickSort</span>(arr, low, high):
+      <span class="kw">if</span> low ≥ high: <span class="kw">return</span>
+
+      pivotIndex = <span class="kw">partition</span>(arr, low, high)
+      quickSort(arr, low, pivotIndex - 1)
+      quickSort(arr, pivotIndex + 1, high)
+
+      <span class="kw">function</span> <span class="fn">partition</span>(arr, low, high):
+      pivot = arr[high]                     <span class="cm">// choose last element as pivot</span>
+      i = low - 1
+
+      <span class="kw">for</span> j = low <span class="kw">to</span> high-1:
+      <span class="kw">if</span> arr[j] ≤ pivot:
+      i++
+      swap(arr[i], arr[j])
+
+      swap(arr[i+1], arr[high])             <span class="cm">// put pivot on the right place</span>
+      <span class="kw">return</span> i+1
+    </div>
+  </div>
+
   <!-- Complexity Table -->
   <div class="content-section reveal">
     <h2><span class="icon">📊</span> Complexity Comparison</h2>
@@ -163,22 +220,31 @@
   </div>
 
   <!-- Advantages / Disadvantages -->
+  <!-- Advantages / Disadvantages -->
   <div class="content-section reveal">
     <h2><span class="icon">⚖️</span> Advantages &amp; Disadvantages</h2>
     <div class="two-col">
       <div>
         <ul class="adv-list pros">
-          <li>Bubble/Insertion: Simple, great for small data</li>
-          <li>Insertion Sort: Adaptive, fast on nearly-sorted data</li>
-          <li>Merge Sort: O(n log n) guaranteed, stable</li>
-          <li>Selection Sort: Minimizes number of swaps</li>
+          <li><strong>Bubble/Insertion:</strong> Simple to understand and implement</li>
+          <li><strong>Insertion Sort:</strong> Adaptive — very fast on nearly-sorted or small data</li>
+          <li><strong>Merge Sort:</strong> Guaranteed O(n log n), stable, predictable performance</li>
+          <li><strong>Quick Sort:</strong> Extremely fast in practice (best real-world average case)</li>
+          <li><strong>Quick Sort:</strong> In-place (almost no extra memory), excellent cache performance</li>
+          <li><strong>Counting Sort:</strong> Linear time O(n + k) — beats comparison sorts for integers</li>
+          <li><strong>Radix Sort:</strong> Linear time O(nk) for fixed-length keys (e.g. integers, strings)</li>
+          <li><strong>Radix Sort:</strong> Non-comparison based — can be faster than Quick/Merge for certain data</li>
         </ul>
       </div>
       <div>
         <ul class="adv-list cons">
-          <li>Bubble/Selection/Insertion: O(n²) for large data</li>
-          <li>Merge Sort: Requires O(n) extra memory</li>
-          <li>None are in-place AND optimal simultaneously</li>
+          <li>Bubble/Selection/Insertion: O(n²) — very slow on large unsorted data</li>
+          <li>Merge Sort: Requires O(n) extra space (not in-place)</li>
+          <li>Quick Sort: Worst-case O(n²) if pivot chosen poorly (e.g. sorted data)</li>
+          <li>Quick Sort: Not stable — relative order of equal elements can change</li>
+          <li>Counting Sort: Limited to integers or small range of values (needs extra space O(k))</li>
+          <li>Radix Sort: Requires stable sort per digit (extra space or time), works best on fixed-length keys</li>
+          <li>Non-comparison sorts (Counting/Radix): Cannot be used on arbitrary objects</li>
         </ul>
       </div>
     </div>
