@@ -180,39 +180,30 @@
     <div class="pseudocode">
       <span class="kw">class</span> <span class="fn">Node</span>:
       data  = value
-      next  = null           <span class="cm">// singly</span>
-      prev  = null           <span class="cm">// doubly</span>
+      next  = null
 
-      <span class="kw">class</span> <span class="fn">CircularLinkedList</span>:
+      <span class="kw">class</span> <span class="fn">LinkedList</span>:
       head = null
 
-      <span class="kw">function</span> <span class="fn">insert</span>(value):
+      <span class="kw">function</span> <span class="fn">insertAtHead</span>(value):
       node = <span class="kw">new</span> Node(value)
-      <span class="kw">if</span> head == null:
-      head = node
-      node.next = head           <span class="cm">// замыкаем круг</span>
-      <span class="kw">else</span>:
+      node.next = head
+      head = node              <span class="cm">// O(1)</span>
+
+      <span class="kw">function</span> <span class="fn">insertAtTail</span>(value):
+      node = <span class="kw">new</span> Node(value)
+      <span class="kw">if</span> head == null: head = node; <span class="kw">return</span>
       curr = head
-      <span class="kw">while</span> curr.next != head:
+      <span class="kw">while</span> curr.next != null:
       curr = curr.next
-      curr.next = node
-      node.next = head           <span class="cm">// замыкаем</span>
+      curr.next = node         <span class="cm">// O(n)</span>
 
       <span class="kw">function</span> <span class="fn">delete</span>(value):
-      <span class="kw">if</span> head == null: <span class="kw">return</span>
-      <span class="kw">if</span> head.data == value:
-      <span class="kw">if</span> head.next == head: head = null
-      <span class="kw">else</span>:
+      <span class="kw">if</span> head.data == value: head = head.next; <span class="kw">return</span>
       curr = head
-      <span class="kw">while</span> curr.next != head:
-      curr = curr.next
-      curr.next = head.next
-      head = head.next
-      <span class="kw">return</span>
-      curr = head
-      <span class="kw">while</span> curr.next != head:
+      <span class="kw">while</span> curr.next != null:
       <span class="kw">if</span> curr.next.data == value:
-      curr.next = curr.next.next
+      curr.next = curr.next.next <span class="cm">// Skip the node</span>
       <span class="kw">return</span>
       curr = curr.next
     </div>
@@ -237,19 +228,18 @@
   <div class="content-section reveal">
     <h2><span class="icon">🌐</span> Real-World Applications</h2>
     <ul class="adv-list pros" style="color:var(--text2);">
-      <li><strong>Music/Video Playlists:</strong> Doubly/Circular linked lists for next/prev + loop playback</li>
-      <li><strong>Browser History:</strong> Doubly linked list for forward/back navigation</li>
-      <li><strong>Round-Robin Scheduling:</strong> Circular linked list for cycling through processes</li>
-      <li><strong>Undo/Redo Buffers:</strong> Doubly linked list in text editors</li>
-      <li><strong>Memory Management:</strong> Free lists in OS kernels</li>
-      <li><strong>Circular Buffers:</strong> Audio streaming, network packet queues</li>
+      <li><strong>Music/Video Playlists:</strong> Each song links to the next; doubly-linked enables prev/next navigation</li>
+      <li><strong>Browser Navigation:</strong> Forward/back history implemented as a doubly linked list</li>
+      <li><strong>Memory Allocators:</strong> Free lists in OS memory management</li>
+      <li><strong>Polynomial Arithmetic:</strong> Each term is a node; used in symbolic math systems</li>
+      <li><strong>Undo Buffers:</strong> Each action stored as a node in an editor's history list</li>
     </ul>
   </div>
 
   <div class="did-you-know reveal">
     <button class="dyk-toggle">💡 Did You Know? <span class="dyk-arrow">▼</span></button>
     <div class="dyk-content">
-      Circular Linked Lists are widely used in operating systems for <strong>round-robin CPU scheduling</strong>, where processes are cycled in a ring. Each process gets a time slice, then the pointer moves to the next — efficient and fair! The concept also powers many circular buffers in audio/video streaming to avoid shifting data.
+      The Linked List was invented by Allen Newell, Cliff Shaw, and Herbert Simon around 1955–1956 as part of their IPL (Information Processing Language) for AI research. The concept was radical at the time — using memory addresses as pointers was a new idea. Their work eventually contributed to Simon and Newell winning the Turing Award in 1975.
     </div>
   </div>
 </main>
